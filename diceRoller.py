@@ -3,7 +3,7 @@ from random import randrange
 
 
 #  Функция броска кубиков без доп числа
-def throwWithoutAdditionalNumber(innerDice):
+def throwWithoutAdditionalNumber(innerDice) -> str:
     innerValue = innerDice.split('d')
     inputedDices, inputedEdges = innerValue[0], innerValue[1]
 
@@ -15,7 +15,7 @@ def throwWithoutAdditionalNumber(innerDice):
         y += i
 
     printedList = str(x).replace('[', '(').replace(']', ')')  # Преобразовываем х из [число, число] в "(число, число)", при этом лист станет строкой
-    print(y, printedList)  # Вывод в консоль результата
+    return " ". join((str(y), printedList))  # Возврат значения
 
 
 #  Функция броска кубиков с доп числом
@@ -27,8 +27,7 @@ def throwWithAdditionalNumber(innerDice):
     dice = int(inputedDices)
 
     if '+' in innerDice:
-        dividedEdgesAndAdditionalNumber = inputedEdges.split(
-            "+")  # Разделяем количество граней и дополнительное положительное число
+        dividedEdgesAndAdditionalNumber = inputedEdges.split("+")  # Разделяем количество граней и дополнительное положительное число
         additionalNumber = int(dividedEdgesAndAdditionalNumber[-1])  # Дополнительное число
         y += additionalNumber  # Прибавляем дополнительное число к у
         lastDigit = '+' + str(additionalNumber)  # Преобразовываем доп число в "+ДопЧисло"
@@ -46,8 +45,8 @@ def throwWithAdditionalNumber(innerDice):
         y += i
 
     printableList = str(x).replace('[', '').replace(']', '')  # Преобразовываем х из [число, число] в "число, число", при этом список станет строкой
-
-    print(y, ' (', printableList, ", ", lastDigit, ')', sep='')  # Вывод в консоль результата
+    dicesWithNumber = ''.join(('(', printableList, ', ', lastDigit, ')'))  # Преобразования кортежа в строку для корректного вывода
+    return ' '.join((str(y), dicesWithNumber))  # Возврат значения
 
 
 #  Функция броска кубиков
@@ -59,10 +58,10 @@ def throwDices():
 
     if 'd' in list(dices[1]):  # Простая проверка ввода
         if '+' in dices or '-' in dices:  # Даннный кейс выполняется если есть доп число со знаком - или +
-            throwWithAdditionalNumber(dices)
+            print(throwWithAdditionalNumber(dices))
 
         else:  # Данный кейс выполняется если нет доп числа со знаком
-            throwWithoutAdditionalNumber(dices)
+            print(throwWithoutAdditionalNumber(dices))
 
 
 throwDices()
